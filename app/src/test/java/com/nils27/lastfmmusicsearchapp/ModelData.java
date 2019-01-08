@@ -1,31 +1,28 @@
 package com.nils27.lastfmmusicsearchapp;
 
-import org.junit.Assert;
+import com.nils27.lastfmmusicsearchapp.model.Artist;
+
 import org.junit.Test;
-
-import java.util.Arrays;
-import java.util.List;
-
 import static org.junit.Assert.*;
 
 public class ModelData {
 
     //test data
-    static final Artist MJ = new Artist(1, "Michael Jackson", 1234567, 12345678, "", 0, null);
+    static final Artist MJ = new Artist("Michael Jackson", "1234567", "12345678", "", "", "0", null);
 
     @Test
     public void testArtistData_Name() {
-        assertEquals("Britney Spears", MJ.getName());
+        assertEquals("Michael Jackson", MJ.getName());
     }
 
     @Test
     public void testArtistData_PlayCount() {
-        assertEquals(1234567, MJ.getPlayCount());
+        assertEquals("1234567", MJ.getPlaycount());
     }
 
     @Test
     public void testArtistData_Listeners() {
-        assertEquals(12345678, MJ.getListeners());
+        assertEquals("12345678", MJ.getListeners());
     }
 
     @Test
@@ -35,12 +32,12 @@ public class ModelData {
 
     @Test
     public void testArtistData_Url_Streamable() {
-        assertEquals(0, MJ.getStreamable());
+        assertEquals("0", MJ.getStreamable());
     }
 
     @Test
     public void testArtistData_Url_Images() {
-        assertArrayEquals(null, MJ.getImages());
+        assertNull(MJ.getImage());
     }
 
 

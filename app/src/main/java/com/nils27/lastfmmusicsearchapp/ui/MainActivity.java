@@ -11,6 +11,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //TODO - recyclerView, dataBinding, adapter, bindingAdapter for images
+
     }
 }
 
@@ -24,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
   *         - Repository Exceptions that may come about if user searches using "word" which has no result, special chars ("±", etc), null/epmty should return top 50, etc
   *         - Does the phone have a network connection
   *
-  * TODO - Add API_Key
+  * Done - Add API_Key
   * TODO - Sort out folder structure of app
   *             - rest
   *             - model
@@ -32,9 +34,9 @@ public class MainActivity extends AppCompatActivity {
   *             - viewmodels
   *             - ui
   *             - adapters
-  *             - utils
+  *             - utils - needed?
   *
-  * TODO - add all dependencies (Retrofit, Glide, etc)
+  * Done - add all dependencies (Retrofit, Glide, etc)
   *
   * TODO - Rest - get data
   * TODO - Repository - get data via rest
