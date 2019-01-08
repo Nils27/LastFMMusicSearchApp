@@ -29,4 +29,7 @@ public class Artists {
         this.attr = attr;
     }
 
+    public Artists(List<Artist> artist) {
+        this.artist = artist;
+    }
 }

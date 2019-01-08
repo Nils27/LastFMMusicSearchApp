@@ -1,9 +1,7 @@
 package com.nils27.lastfmmusicsearchapp.rest;
 
-import com.nils27.lastfmmusicsearchapp.BuildConfig;
+import com.nils27.lastfmmusicsearchapp.model.Artists;
 import com.nils27.lastfmmusicsearchapp.model.TopChartArtists;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -13,6 +11,8 @@ public interface LastFMService {
 
     //Get the Top 50 artists
     @GET("?method=chart.gettopartists&api_key={api_key}&format=json")
-    Call<List<TopChartArtists>> getTopChartArtistsJson(@Path("api_key") String API_KEY);
+    Call<Artists> getTopChartArtistsJson2(@Path("api_key") String API_KEY_VALUE);
 
+    @GET("2.0/?method=chart.gettopartists&api_key=6c5b54cf5ef1d377a3bdf2aeb5086c3d&format=json")
+    Call<TopChartArtists> getTopChartArtistsJson();
 }

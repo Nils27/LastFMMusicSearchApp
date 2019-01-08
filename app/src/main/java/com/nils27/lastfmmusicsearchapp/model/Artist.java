@@ -27,6 +27,10 @@ public class Artist {
     @Expose
     private List<Image> image = null;
 
+    public Artist(String name) {
+        this.name = name;
+    }
+
     public Artist(String name, String playcount, String listeners, String mbid, String url, String streamable, List<Image> image) {
         this.name = name;
         this.playcount = playcount;

@@ -6,11 +6,13 @@ import android.content.Context;
 import android.util.Log;
 
 import com.nils27.lastfmmusicsearchapp.BuildConfig;
+import com.nils27.lastfmmusicsearchapp.model.Artist;
+import com.nils27.lastfmmusicsearchapp.model.Artists;
 import com.nils27.lastfmmusicsearchapp.model.TopChartArtists;
 import com.nils27.lastfmmusicsearchapp.rest.Client;
 import com.nils27.lastfmmusicsearchapp.rest.LastFMService;
 
-import java.util.List;
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,9 +27,10 @@ public class DataRepository {
     private Retrofit restClient = Client.getClient();
     private LastFMService client = restClient.create(LastFMService.class);
 
-    private MutableLiveData<List<TopChartArtists>> mTopChartArtists;
+    private MutableLiveData<Artists> mArtists;
 
     private DataRepository(Context context) {
+        mArtists = new MutableLiveData<>();
     }
 
     public static DataRepository getInstance(Context context) {
@@ -37,23 +40,42 @@ public class DataRepository {
         return instance;
     }
 
-    private void fetchTopChartArtists() {
-        client.getTopChartArtistsJson(API_KEY_VALUE).enqueue(new Callback<List<TopChartArtists>>() {
+    private void fetchChartArtists() {
+//        client.getTopChartArtistsJson(API_KEY_VALUE).enqueue(new Callback<Artists>() {
+//        try {
+//            Artists artists = client.getTopChartArtistsJson().execute().body();
+//            Log.d(TAG, "onResponse: response recieved");
+//            Log.d(TAG, "onResponse: response - " + artists.toString());
+//            mArtists.postValue(artists);
+//        } catch (IOException e) {
+//            Log.d(TAG, "fetchElements: error - " + e.getMessage());
+//        }
+
+
+
+        client.getTopChartArtistsJson().enqueue(new Callback<TopChartArtists>() {
             @Override
-            public void onResponse(Call<List<TopChartArtists>> call, Response<List<TopChartArtists>> response) {
-                mTopChartArtists.setValue(response.body());
+            public void onResponse(Call<TopChartArtists> call, Response<TopChartArtists> response) {
+                Log.d(TAG, "onResponse: response recieved");
+                Log.d(TAG, "onResponse: response - " + response.body().toString());
+                mArtists.postValue(response.body().getArtists());
             }
 
             @Override
-            public void onFailure(Call<List<TopChartArtists>> call, Throwable t) {
+            public void onFailure(Call<TopChartArtists> call, Throwable t) {
                 Log.d(TAG, "onFailure: Top Chart Artists Data Fetch has failed");
+                Log.d(TAG, "onFailure: call request - " + call.request().toString());
+                Log.d(TAG, "onFailure: t - " + t.getMessage());
+                Log.d(TAG, "onFailure: t - " + t.toString());
             }
         });
     }
 
-    public LiveData<List<TopChartArtists>> getTopChartArtistsData() {
-        fetchTopChartArtists(); //call refresh of liveData
-        return mTopChartArtists;
+    public LiveData<Artists> getArtistsData() {
+        Log.d(TAG, "getArtistsData: pre fetch artist");
+        fetchChartArtists(); //call refresh of liveData
+        Log.d(TAG, "getArtistsData: after fetch called");
+        return mArtists;
     }
 
 

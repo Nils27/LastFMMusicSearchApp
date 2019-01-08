@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Client {
     public static final String TAG = Client.class.getSimpleName();
-    private static final String BASE_URL = "http://ws.audioscrobbler.com/2.0/"; //LastFM base url
+    private static final String BASE_URL = "http://ws.audioscrobbler.com/"; //LastFM base url
 
     private static Retrofit retrofit = null;
 
