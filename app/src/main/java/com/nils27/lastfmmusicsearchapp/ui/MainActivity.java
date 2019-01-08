@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements AdapterArtistSear
             }
         });
 
-        //TODO - bindingAdapter for images
         binding.rvListArtists.setLayoutManager(new LinearLayoutManager(this));
         binding.rvListArtists.setAdapter(adapterArtistSearch);
 
