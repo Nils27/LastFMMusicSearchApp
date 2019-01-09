@@ -12,8 +12,8 @@ import java.util.List;
 public class BindingAdapterHelper {
     public BindingAdapterHelper() {}
 
-    @BindingAdapter({"bind:setImage"})
-    public static void setImage(ImageView view, List<Image> imagesList) {
+    @BindingAdapter({"setArtistImage"})
+    public static void setArtistImage(ImageView view, List<Image> imagesList) {
         String mediumImageString = "";
         for (Image i : imagesList) {
             if (i.getSize().equals("medium")) {
