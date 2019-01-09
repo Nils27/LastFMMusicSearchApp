@@ -8,6 +8,7 @@ An App to allow Users to search for Artists and see their bios.
 
 
 Future Updates:
+
 The json data data could benefit from Paging Library (https://developer.android.com/reference/android/arch/paging/DataSource)
 
 An error screen or snackbox will be used to notify users of various errors/warnings (if they have no internet connection, search was not valid, etc)
