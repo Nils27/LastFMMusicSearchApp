@@ -6,13 +6,13 @@ import android.content.Context;
 import android.util.Log;
 
 import com.nils27.lastfmmusicsearchapp.BuildConfig;
-import com.nils27.lastfmmusicsearchapp.model.Artist;
 import com.nils27.lastfmmusicsearchapp.model.Artists;
 import com.nils27.lastfmmusicsearchapp.model.TopChartArtists;
+import com.nils27.lastfmmusicsearchapp.model.artist_details.ArtistDetails;
+import com.nils27.lastfmmusicsearchapp.model.artist_search.ArtistResult;
 import com.nils27.lastfmmusicsearchapp.rest.Client;
 import com.nils27.lastfmmusicsearchapp.rest.LastFMService;
 
-import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,9 +28,13 @@ public class DataRepository {
     private LastFMService client = restClient.create(LastFMService.class);
 
     private MutableLiveData<Artists> mArtists;
+    private MutableLiveData<ArtistDetails> mArtistDetails;
+    private MutableLiveData<ArtistResult> mArtistSearched;
 
     private DataRepository(Context context) {
         mArtists = new MutableLiveData<>();
+        mArtistDetails = new MutableLiveData<>();
+        mArtistSearched = new MutableLiveData<>();
     }
 
     public static DataRepository getInstance(Context context) {
@@ -41,23 +45,9 @@ public class DataRepository {
     }
 
     private void fetchChartArtists() {
-//        client.getTopChartArtistsJson(API_KEY_VALUE).enqueue(new Callback<Artists>() {
-//        try {
-//            Artists artists = client.getTopChartArtistsJson().execute().body();
-//            Log.d(TAG, "onResponse: response recieved");
-//            Log.d(TAG, "onResponse: response - " + artists.toString());
-//            mArtists.postValue(artists);
-//        } catch (IOException e) {
-//            Log.d(TAG, "fetchElements: error - " + e.getMessage());
-//        }
-
-
-
-        client.getTopChartArtistsJson().enqueue(new Callback<TopChartArtists>() {
+        client.getTopChartArtistsJson(API_KEY_VALUE, "json").enqueue(new Callback<TopChartArtists>() {
             @Override
             public void onResponse(Call<TopChartArtists> call, Response<TopChartArtists> response) {
-                Log.d(TAG, "onResponse: response recieved");
-                Log.d(TAG, "onResponse: response - " + response.body().toString());
                 mArtists.postValue(response.body().getArtists());
             }
 
@@ -72,11 +62,57 @@ public class DataRepository {
     }
 
     public LiveData<Artists> getArtistsData() {
-        Log.d(TAG, "getArtistsData: pre fetch artist");
         fetchChartArtists(); //call refresh of liveData
-        Log.d(TAG, "getArtistsData: after fetch called");
         return mArtists;
     }
 
 
-}
+    private void fetchArtistDetails(String artistName) {
+    client.getArtistDetailsJson(artistName, API_KEY_VALUE, "json").enqueue(new Callback<ArtistDetails>() {
+            @Override
+            public void onResponse(Call<ArtistDetails> call, Response<ArtistDetails> response) {
+                mArtistDetails.postValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArtistDetails> call, Throwable t) {
+                Log.d(TAG, "onFailure: Top Chart Artists Data Fetch has failed");
+                Log.d(TAG, "onFailure: call request - " + call.request().toString());
+                Log.d(TAG, "onFailure: t - " + t.getMessage());
+                Log.d(TAG, "onFailure: t - " + t.toString());
+            }
+        });
+    }
+
+    public LiveData<ArtistDetails> getArtistDetailsData(String artistName) {
+        fetchArtistDetails(artistName); //call refresh of liveData
+        return mArtistDetails;
+    }
+
+
+    public LiveData<ArtistResult> getSearchedArtistData(String query) {
+        fetchSearchedArtist(query); //call refresh of liveData
+        return mArtistSearched;
+    }
+
+    private void fetchSearchedArtist(String artistName) {
+        client.getSearchedArtistJson(artistName, API_KEY_VALUE, "json").enqueue(new Callback<ArtistResult>() {
+            @Override
+            public void onResponse(Call<ArtistResult> call, Response<ArtistResult> response) {
+                mArtistSearched.postValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArtistResult> call, Throwable t) {
+                Log.d(TAG, "onFailure: Searched Artist Data Fetch has failed");
+                Log.d(TAG, "onFailure: call request - " + call.request().toString());
+                Log.d(TAG, "onFailure: t - " + t.getMessage());
+                Log.d(TAG, "onFailure: t - " + t.toString());
+            }
+        });
+
+    }
+
+
+
+    }

@@ -19,7 +19,6 @@ import java.util.List;
 public class AdapterArtistSearch extends RecyclerView.Adapter<AdapterArtistSearch.SearchedArtistsViewHolder> {
 
     private static final String TAG = AdapterArtistSearch.class.getSimpleName();
-    private Artists mArtists;
     private List<Artist> mArtistList = new ArrayList<>();
     private Context mContext;
 
@@ -30,11 +29,10 @@ public class AdapterArtistSearch extends RecyclerView.Adapter<AdapterArtistSearc
     }
 
 
-    public AdapterArtistSearch(@NonNull Context context, Artists chartArtists, SearchedArtistOnClickHandler clickHandler) {
+    public AdapterArtistSearch(@NonNull Context context, List<Artist> chartArtists, SearchedArtistOnClickHandler clickHandler) {
         mContext = context;
-        mArtists = chartArtists;
+        mArtistList = chartArtists;
         mClickHandler = clickHandler;
-        setArtistList();
     }
 
 
@@ -60,17 +58,8 @@ public class AdapterArtistSearch extends RecyclerView.Adapter<AdapterArtistSearc
         return mArtistList.size();
     }
 
-    private void setArtistList() {
-        if (mArtists != null) {
-            mArtistList = mArtists.getArtist(); //gets List of Artists
-        } else {
-            mArtistList = null;
-        }
-    }
-
-    public void changeArtistList(Artists newArtists) {
-        mArtists = newArtists;
-        setArtistList();
+    public void changeArtistList(List<Artist> newArtistList) {
+        mArtistList = newArtistList;
         notifyDataSetChanged();
     }
 
