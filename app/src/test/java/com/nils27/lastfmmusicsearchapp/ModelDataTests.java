@@ -5,7 +5,7 @@ import com.nils27.lastfmmusicsearchapp.model.Artist;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class ModelData {
+public class ModelDataTests {
 
     //test data
     static final Artist MJ = new Artist("Michael Jackson", "1234567", "12345678", "", "", "0", null);

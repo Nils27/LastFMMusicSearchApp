@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements AdapterArtistSear
 
         //view model
         artistSearchViewModel = ViewModelProviders.of(this).get(ArtistSearchViewModel.class);
-        artistSearchViewModel.init(this);
+//        artistSearchViewModel.init(this);
 
 
         if (getSupportActionBar() != null) {

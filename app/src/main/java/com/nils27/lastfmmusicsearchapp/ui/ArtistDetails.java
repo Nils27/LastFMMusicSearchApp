@@ -11,6 +11,7 @@ import android.util.Log;
 import com.nils27.lastfmmusicsearchapp.R;
 import com.nils27.lastfmmusicsearchapp.databinding.ActivityArtistDetailsBinding;
 import com.nils27.lastfmmusicsearchapp.viewmodels.ArtistDetailsViewModel;
+import com.nils27.lastfmmusicsearchapp.viewmodels.ArtistDetailsViewModelFactory;
 
 public class ArtistDetails extends AppCompatActivity {
 
@@ -29,9 +30,8 @@ public class ArtistDetails extends AppCompatActivity {
         }
 
         //view model
+        ArtistDetailsViewModelFactory factory = new ArtistDetailsViewModelFactory(this.getApplication(), artistName);
         ArtistDetailsViewModel artistDetailsViewModel = ViewModelProviders.of(this).get(ArtistDetailsViewModel.class);
-        artistDetailsViewModel.init(this, artistName);
-
 
         artistDetailsViewModel.getArtistDetails().observe(this, new Observer<com.nils27.lastfmmusicsearchapp.model.artist_details.ArtistDetails>() {
             @Override

@@ -1,5 +1,7 @@
 package com.nils27.lastfmmusicsearchapp.viewmodels;
 
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
@@ -13,28 +15,28 @@ import com.nils27.lastfmmusicsearchapp.repository.DataRepository;
 
 import java.util.List;
 
-public class ArtistSearchViewModel extends ViewModel {
+public class ArtistSearchViewModel extends AndroidViewModel {
     private static final String TAG = ArtistSearchViewModel.class.getSimpleName();
 //    private LiveData<Integer> entryCount;
     private DataRepository dataRepository;
     private LiveData<Artists> chartArtists;
     private LiveData<ArtistResult> searchedArtists;
-    private MutableLiveData<String> searchQuery;
+    private MutableLiveData<String> searchQuery = new MutableLiveData<>();
 
 
-    public ArtistSearchViewModel() {
-    }
-
-    public void init(Context context) {
+    public ArtistSearchViewModel(Application application) {
+        super(application);
         Log.d(TAG, "init: Pre Init");
-        dataRepository = DataRepository.getInstance(context);
+        dataRepository = DataRepository.getInstance(application.getApplicationContext());
         chartArtists = dataRepository.getArtistsData();
 
-        searchQuery = new MutableLiveData<>();
         searchedArtists = Transformations.switchMap(searchQuery, input -> dataRepository.getSearchedArtistData(input));
 
         Log.d(TAG, "init: Post Init");
     }
+
+//    public void init(Context context) {
+//    }
 
     public LiveData<Artists> getChartArtists() {
         return chartArtists;

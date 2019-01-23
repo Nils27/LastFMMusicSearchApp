@@ -15,6 +15,8 @@ An error screen or snackbox will be used to notify users of various errors/warni
 
 Many more Unit tests will be added to help fish out potential issues for users and ensure the various classes all work as expected
 
+Clean up the gradle dependancies
+
 A cleaner user interface, with animations.
 
 Remake this in Kotlin
