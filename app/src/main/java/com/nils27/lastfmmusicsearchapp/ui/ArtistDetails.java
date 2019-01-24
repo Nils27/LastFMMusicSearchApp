@@ -31,7 +31,7 @@ public class ArtistDetails extends AppCompatActivity {
 
         //view model
         ArtistDetailsViewModelFactory factory = new ArtistDetailsViewModelFactory(this.getApplication(), artistName);
-        ArtistDetailsViewModel artistDetailsViewModel = ViewModelProviders.of(this).get(ArtistDetailsViewModel.class);
+        ArtistDetailsViewModel artistDetailsViewModel = ViewModelProviders.of(this, factory).get(ArtistDetailsViewModel.class);
 
         artistDetailsViewModel.getArtistDetails().observe(this, new Observer<com.nils27.lastfmmusicsearchapp.model.artist_details.ArtistDetails>() {
             @Override
